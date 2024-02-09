@@ -5,12 +5,14 @@ const timezone = document.getElementById('time-zone')
 const countryEl = document.getElementById('country')
 const weatherForecastEl = document.getElementById('weather-forecast')
 const currentTempEl = document.getElementById('current-temp')
+const inputEl = document.getElementById('search')
+const locationEl = document.getElementById('location')
 
 const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 const API_KEY = 'ffb7b9808e07c9135bdcc7d1e867253d'
-getWeatherData()
+// getWeatherData()
 
 setInterval(() => {
     const time = new Date();
@@ -26,18 +28,34 @@ setInterval(() => {
     dateEl.innerHTML = days[day] + ', ' + date + ' ' + months[month]
 }, 1000);
 
-function getWeatherData() {
-    navigator.geolocation.getCurrentPosition((success) => {
-        // console.log(success)
+navigator.geolocation.getCurrentPosition((success) => {
+    console.log(success)
+    let { latitude, longitude } = success.coords;
+    getWeatherData(latitude, longitude)
+})
 
-        let { latitude, longitude } = success.coords;
+function getWeatherData(latitude, longitude) {
 
-        fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely&units=metric&appid=${API_KEY}`).then(res => res.json()).then(data => {
-            console.log(data)
-            showWeatherData(data)
-        })
+    // console.log(success)
+
+    fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely&units=metric&appid=${API_KEY}`).then(res => res.json()).then(data => {
+        console.log(data)
+        showWeatherData(data)
     })
+
 }
+
+inputEl.addEventListener('search', async () => {
+    console.log('searched')
+    let data = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${inputEl.value}&limit=1&appid=ffb7b9808e07c9135bdcc7d1e867253d`).then(res => res.json()).then(data => {
+        console.log(data[0])
+        locationEl.innerHTML = data[0].name
+        getWeatherData(data[0].lat, data[0].lon)
+        
+    })
+
+    inputEl.value = ''
+})
 
 function showWeatherData(data) {
     let { humidity, pressure, sunrise, sunset, wind_speed, temp } = data.current;

@@ -50,8 +50,13 @@ body {
 }
 
 .place-container .time-zone {
-    font-size: 30px;
+    font-size: 20px;
     font-weight: 100;
+}
+
+.place-container .location {
+    font-size: 30px;
+    font-weight: 300;
 }
 
 .place-container .country {
@@ -135,6 +140,25 @@ body {
 
 .weather-forecast .weather-forecast-item .temp {
     font-weight: 100;
+}
+
+.header {
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 5px;
+    display: flex;
+    justify-content: right;
+}
+
+.input-container {
+    display: flex;
+    justify-content: right;
+}
+
+#search {
+    /* display: flex; */
+    padding: 5px;
+    border-radius: 3px;
+    border: 0;
 }
 
 @media only screen and (max-width:730px) {
