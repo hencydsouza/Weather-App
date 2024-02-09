@@ -50,10 +50,8 @@ inputEl.addEventListener('search', async () => {
     let data = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${inputEl.value}&limit=1&appid=${API_KEY}`).then(res => res.json()).then(data => {
         console.log(data[0])
         locationEl.innerHTML = data[0].name
-        getWeatherData(data[0].lat, data[0].lon)
-        
+        getWeatherData(data[0].lat, data[0].lon)      
     })
-
     inputEl.value = ''
 })
 
