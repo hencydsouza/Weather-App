@@ -47,7 +47,7 @@ function getWeatherData(latitude, longitude) {
 
 inputEl.addEventListener('search', async () => {
     console.log('searched')
-    let data = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${inputEl.value}&limit=1&appid=ffb7b9808e07c9135bdcc7d1e867253d`).then(res => res.json()).then(data => {
+    let data = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${inputEl.value}&limit=1&appid=${API_KEY}`).then(res => res.json()).then(data => {
         console.log(data[0])
         locationEl.innerHTML = data[0].name
         getWeatherData(data[0].lat, data[0].lon)
